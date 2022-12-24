@@ -1,24 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect, Suspense } from "react";
+import { ThemeProvider } from "@mui/material/styles";
+import { lightTheme, darkTheme } from "./assets/theme/theme";
+import CssBaseline from '@mui/material/CssBaseline';
+//import ScrollToTop from "./components/ScrollToTop";
+import { BrowserRouter as Router } from "react-router-dom";
+import Routes from "./Routes";
+import ThemeContext from "./contexts/themeContext";
+import LoaderContext from "./contexts/loaderContext";
 
 function App() {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      setIsDarkMode(true);
+    } else {
+      setIsDarkMode(false);
+    }
+  }, []);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Suspense fallback={<div></div>}>
+        <ThemeContext.Provider value={{ isDarkMode, setIsDarkMode }}>
+          <LoaderContext.Provider value={{ isLoading, setIsLoading }}>
+            <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+              <CssBaseline />
+              {/* <ScrollToTop /> */}
+              <Routes />
+            </ThemeProvider>
+          </LoaderContext.Provider>
+        </ThemeContext.Provider>
+      </Suspense>
+    </Router>
   );
 }
 
