@@ -43,7 +43,7 @@ export const projects = [
 
 export const about_description1 = 
 `
-Hi, my name is Vithursan Thiruvarooran and I love solving interesting puzzles. Whether it's an online Chess puzzles or investigating an interesting bug I enjoy the challenge. 
+Hi, my name is Vithursan Thiruvarooran and I love solving interesting puzzles. Whether it's an online Chess puzzle or investigating an interesting bug I enjoy the challenge. 
 `;
 
 export const about_description2 = 
