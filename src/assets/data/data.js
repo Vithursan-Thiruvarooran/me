@@ -7,7 +7,7 @@ export const experiences = [
     description1: "Arts & Science IIT supports the Faculty’s teaching, learning, research, and administrative operations through its service desk, computing lab management, research computing system administration, data centre operations and application development.",
     description2: 
     `As an software developer I was mainly responsible for the CHASS Data Centre. 
-    Notably, I designed changes to the data center that allowed it to continue support for it's most popular data set, CANSIM, 
+    Notably, I designed changes to the data center that allowed it to continue support for its most popular data set, CANSIM, 
     which was provided to us daily by Statistics Canada and had undergone a schema change. 
     I worked on scripts to extract, transform, and load the newly modifed data sets and quickly deploy the changes to minimize service down time for our clients.
     `,
@@ -43,7 +43,7 @@ export const projects = [
 
 export const about_description1 = 
 `
-Hi, my name is Vithursan Thiruvarooran and I love solving interesting puzzles. Whether they are online Chess puzzles or investigating a challeging bug I enjoy the challenge. 
+Hi, my name is Vithursan Thiruvarooran and I love solving interesting puzzles. Whether it's an online Chess puzzles or investigating a interesting bug I enjoy the challenge. 
 `;
 
 export const about_description2 = 
