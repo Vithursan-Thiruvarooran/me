@@ -23,19 +23,17 @@ const StickyBar = () => {
         <Grid item xs={8}> 
           <Link href={gitHub} target="_blank" underline="hover" rel="noopener" >
             <IconButton>
-              <img style={{width: "25px", height: "25px"}} src={GitHubLogo}/>
+              <img style={{width: "25px", height: "25px"}} src={GitHubLogo} alt="GitHub Logo"/>
             </IconButton>
           </Link>
         </Grid>
-
         <Grid item xs={8}>
           <Link href={linkedIn} target="_blank" underline="hover" rel="noopener" >
             <IconButton>
-              <img style={{width: "25px", height: "25px"}} src={LinkedInLogo}/>
+              <img style={{width: "25px", height: "25px"}} src={LinkedInLogo} alt="LinkedIn Logo"/>
             </IconButton>
           </Link>
         </Grid>
-
         <Grid item xs={8}>
           <ThemeToggle></ThemeToggle>
         </Grid>
