@@ -52,3 +52,6 @@ Naturally, I studied Computer Science at the Unerversity of Toronto specializing
 The first co-op I did was as an application developer with the University of Toronto’s IIT department where I maintained and upgraded the CHASS Data Center.
 My second co-op was also as an application developer with CIBC working on their main sales application. 
 `; 
+
+export const linkedIn = "https://www.linkedin.com/in/vithursan-thiruvarooran-70b869133/";
+export const gitHub = "https://github.com/Vithursan-Thiruvarooran/";

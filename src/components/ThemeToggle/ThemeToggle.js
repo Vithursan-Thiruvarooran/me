@@ -6,9 +6,9 @@ const ThemeToggle = () => {
   const { isDarkMode, setIsDarkMode } = useContext(themeContext);
 
   return (
-    <div>
-      <Tooltip title={isDarkMode ? "Light Mode" : "Dark Mode"}>
-        <Switch checked={isDarkMode} onChange={(event) =>{setIsDarkMode(event.target.checked)}}/>
+    <div style={{paddingTop: "5px"}}>
+      <Tooltip title={isDarkMode ? "Light Mode" : "Dark Mode"} >
+        <Switch size="small" checked={isDarkMode} onChange={(event) =>{setIsDarkMode(event.target.checked)}} />
       </Tooltip>
     </div>
     
