@@ -67,6 +67,7 @@ const Home = () => {
             animate={controls}
             custom={3}
             variant="body1"
+            color="secondary"
             style={{ marginBottom: "0" }}
           >
             Computer Science - Specialist in Software Engineering
@@ -76,6 +77,7 @@ const Home = () => {
             animate={controls}
             custom={4}
             variant="body1"
+            color="secondary"
             style={{ marginBottom: "30px" }}
           >
             Toronto, Canada
