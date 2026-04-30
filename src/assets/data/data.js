@@ -25,6 +25,19 @@ export const experiences = [
     `,
     technologies: ["Angular", "Java", "Node", "PEGA"],
   },
+  {
+    tabName: 'OrderGrid',
+    job: 'OrderGrid',
+    title: 'Junior Software Engineer',
+    duration: 'Sep 2023 - Apr 2026',
+    description1: "Designed and implemented scalable test automation and CI/CD solutions across UI, API, and performance testing, improving reliability and efficiency",
+    description2: 
+    `I developed a Playwright-based framework for end-to-end regression testing that significantly improved efficiency and reliability, reducing execution time by 50% and test flakiness by 90%. 
+    I also built API test automation using Jest to ensure comprehensive application coverage, and created JMeter load testing scripts to evaluate system performance under high-traffic conditions. 
+    In addition, I integrated automated testing into CI/CD pipelines using GitHub Actions and developed reporting dashboards with GitHub Pages to enhance visibility into test results and support continuous delivery. 
+    `,
+    technologies: ["Playwright", "Javascript", "Jest", "JMeter", "GitHub Actions CI/CD",],
+  },
 ];
 
 export const projects = [
@@ -43,15 +56,18 @@ export const projects = [
 
 export const about_description1 = 
 `
-Hi, my name is Vithursan Thiruvarooran and I love solving interesting puzzles. Whether it's an online Chess puzzle or investigating an interesting bug I enjoy the challenge. 
+Hi, my name is Vithursan Thiruvarooran, and I enjoy solving complex problems—whether it’s a tough chess puzzle, an engaging board game, or tracking down an interesting bug. That curiosity led me to pursue a degree in Computer Science at the University of Toronto, where I specialized in Software Engineering. 
 `;
 
 export const about_description2 = 
 `
-Naturally, I studied Computer Science at the Unerversity of Toronto specializing in the Software Engineering stream and graduated in Nov 2022. While studying I’ve completed two great co-ops. 
-The first co-op I did was as an application developer with the University of Toronto’s IIT department where I maintained and upgraded the CHASS Data Center.
-My second co-op was also as an application developer with CIBC working on their main sales application. 
+Most recently, I’ve been working in Quality Engineering, where I design and implement scalable test automation solutions for UI, API, and performance testing. This includes building end-to-end frameworks with Playwright, developing API tests, running load tests, and integrating automation into CI/CD pipelines to improve reliability and efficiency.
 `; 
 
-export const linkedIn = "https://www.linkedin.com/in/vithursan-thiruvarooran-70b869133/";
+export const about_description3 = 
+`
+Fun fact: I competed in the 2025 Canadian National Catan Championships and will be returning to compete in 2026.
+`
+
+export const linkedIn = "https://www.linkedin.com/in/vithursan-t-70b869133/";
 export const gitHub = "https://github.com/Vithursan-Thiruvarooran/";

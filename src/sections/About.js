@@ -4,7 +4,7 @@ import SectionContainer from "../containers/SectionContainer";
 
 import Me from "../assets/images/me.jpg";
 
-import { about_description1, about_description2 } from "../assets/data/data";
+import { about_description1, about_description2, about_description3 } from "../assets/data/data";
 
 const About = () => {
     const theme = useTheme();
@@ -37,8 +37,11 @@ const About = () => {
               <Typography variant="body1" sx={{ mb: 2}}>
                 {about_description1}
               </Typography>
-              <Typography variant="body1">
+              <Typography variant="body1" sx={{ mb: 2}}>
                 {about_description2}
+              </Typography>
+              <Typography variant="body1">
+                {about_description3}
               </Typography>
             </Box>
             {/* <Skills /> */}
