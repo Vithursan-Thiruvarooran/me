@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import { withStyles } from "@mui/styles";
 import { Container, Tab, Button, Link as MuiLink } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import { motion, useAnimation } from "framer-motion";
 import { Link, Events } from "react-scroll";
 import LoaderContext from "../../contexts/loaderContext";
@@ -125,16 +125,15 @@ const Menu = ({homeIsActive}) => {
   );
 };
 
-const StyledTab = withStyles((theme) => ({
-  root: {
-    transition: ".2s",
-    minWidth: 120,
-    "&:hover": {
-      color: theme.palette.primary.main,
-    },
-   
+const BaseTab = (props) => <Tab disableRipple {...props} />;
+
+const StyledTab = styled(BaseTab)(({ theme }) => ({
+  transition: ".2s",
+  minWidth: 120,
+  "&:hover": {
+    color: theme.palette.primary.main,
   },
-}))((props) => <Tab disableRipple {...props} />);
+}));
 
 
 export default Menu;

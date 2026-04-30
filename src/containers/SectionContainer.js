@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { Container, Divider, Typography } from "@mui/material";
-//import { makeStyles } from "@mui/styles";
 import { useTheme } from "@mui/material";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
