@@ -42,6 +42,17 @@ export const experiences = [
 
 export const projects = [
   {
+    title: 'Scrabble Score Tracker',
+    image: 'scrabble.jpg',
+    description1: 'A real-time Scrabble application with live game state sync across two players via bidirectional WebSocket communication.',
+    description2: 'React 19 / TypeScript frontend backed by FastAPI + Python-socketio, with MongoDB and Redis for persistence. Client-side scoring logic handles premium squares, cross-word scores, and the bingo bonus for live tile-drag previews on a @dnd-kit board. Shipped as a PWA with Web Push notifications. Includes a computer-vision pipeline (OpenCV + Tesseract OCR) that scans a physical board via ArUco markers and perspective warping to extract the 15×15 letter grid from a photo.',
+    technologies: ["React", "TypeScript", "FastAPI", "Python", "MongoDB", "Redis", "Socket.IO", "OpenCV"],
+    links: [
+      { label: 'Site', url: 'https://vithiru.ddns.net/scrabble/' },
+      { label: 'GitHub', url: 'https://github.com/Vithursan-Thiruvarooran/scrabble-score-tracker' }
+    ],
+  },
+  {
     title: 'Catan Data Tracker',
     image: 'projectCatanTracker.png',
     description1: 'A web application designed to track and analyze personal Catan game data and see interesting trends.',
@@ -52,6 +63,7 @@ export const projects = [
       { label: 'GitHub', url: 'https://github.com/Vithursan-Thiruvarooran/vithiru' }
     ],
   },
+  
 ];
 
 export const about_description1 = 

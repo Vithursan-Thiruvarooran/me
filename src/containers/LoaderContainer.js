@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect} from "react";
 import { useTheme } from "@mui/material";
 import { motion } from "framer-motion";
 import LoaderContext from "../contexts/loaderContext";
@@ -6,6 +6,11 @@ import LoaderContext from "../contexts/loaderContext";
 const LoaderContainer = ({ children }) => {
     const {setIsLoading} = useContext(LoaderContext)
     const theme = useTheme();
+
+    useEffect(() => {
+      document.body.style.overflow = "hidden";
+      return () => { document.body.style.overflow = ""; };
+    }, []);
 
     const containerStyle = {
       position:"fixed",
@@ -36,8 +41,9 @@ const LoaderContainer = ({ children }) => {
           delay: 4.8,
           duration: 0.3
         }}
-        onAnimationComplete={definition => {
-          setIsLoading(false)
+        onAnimationComplete={() => {
+          document.body.style.overflow = "";
+          setIsLoading(false);
         }}
         style={containerStyle}
       >
