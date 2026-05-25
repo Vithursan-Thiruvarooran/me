@@ -40,6 +40,7 @@ const OpenProjectCard = ({ index, project, onClose }) => {
           maxWidth: "600px",
           maxHeight: "100%",
           overflowY: "auto",
+          backgroundColor: theme.palette.background.default,
         }}
         onClick={(e) => e.stopPropagation()}
       >
