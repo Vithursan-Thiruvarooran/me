@@ -53,14 +53,14 @@ export const projects = [
     ],
   },
   {
-    title: 'Catan Data Tracker',
+    title: 'Colonist Data Tracker',
     image: 'projectCatanTracker.png',
-    description1: 'A web application designed to track and analyze personal Catan game data and see interesting trends.',
-    description2: 'You can input game statistics, player statistics, and dice statistics then see interesting stats such as player styles and correlation between game strategies and Victory Points. This is a MERN application that is deployed on my personal server and used by friends and family to track games.',
-    technologies: ["React", "Express", "MongoDB", "Node"],
+    description1: 'A data pipeline and dashboard that pulls game data from colonist.io and turns it into stats and full game replays.',
+    description2: 'A custom Chrome extension grabs the replay data for finished colonist.io games. A Python decoder then pulls out dice rolls, trades, builds, robber moves, starting placements and final scores. Games are stored in MongoDB and served through a FastAPI backend to a React dashboard with stats across games, per-game breakdowns and turn-by-turn replays. Deployed with Docker on my personal server.',
+    technologies: ["React", "TypeScript", "FastAPI", "MongoDB", "Docker"],
     links: [
-      { label: 'Site', url: 'https://vithiru.ddns.net/' },
-      { label: 'GitHub', url: 'https://github.com/Vithursan-Thiruvarooran/vithiru' }
+      { label: 'Site', url: 'https://vithiru.ddns.net/colonist/' },
+      { label: 'GitHub', url: 'https://github.com/Vithursan-Thiruvarooran/colonist-tracker' }
     ],
   },
   
