@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import { Container, Divider, Typography } from "@mui/material";
 import { useTheme } from "@mui/material";
-import { motion, useAnimation } from "framer-motion";
+import { motion, useAnimation, useReducedMotion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 //import Divider from "../components/Divider";
 
 const SectionContainer = ({ children, maxWidth, full, reverse, title, padding, ...rest }) => {
     const theme = useTheme();
+    const reduceMotion = useReducedMotion();
     const titleControls = useAnimation();
     const contentControls = useAnimation();
     const [titleRef, titleInView] = useInView();
@@ -79,7 +80,7 @@ const SectionContainer = ({ children, maxWidth, full, reverse, title, padding, .
           }}
           variants={{
             visible: { opacity: 1, y: 0 },
-            hidden: { opacity: 0, y: -50 },
+            hidden: { opacity: 0, y: reduceMotion ? 0 : -50 }, // reduced motion: fade only
           }}
         >
           {children}

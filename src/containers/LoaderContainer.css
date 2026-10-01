@@ -1,0 +1,63 @@
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.loader .cell {
+  position: absolute;
+  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+}
+
+/* On exit the sage screen breaks into hex tiles that shrink away from the centre. */
+.loader.out {
+  background: transparent !important;
+}
+.loader.out .cell {
+  animation: loader-cell-out 0.6s cubic-bezier(0.5, 0, 0.2, 1) forwards;
+  animation-delay: var(--d);
+}
+@keyframes loader-cell-out {
+  to { transform: scale(0) rotate(60deg); opacity: 0.2; }
+}
+
+.loader-stage {
+  position: relative;
+  z-index: 1;
+  transition: opacity 0.25s, transform 0.25s;
+}
+.loader.out .loader-stage {
+  opacity: 0;
+  transform: scale(0.96);
+}
+
+.loader-skip {
+  position: absolute;
+  right: 16px;
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  z-index: 2;
+  font: 500 12px/1 ui-monospace, Menlo, Consolas, monospace;
+  color: inherit;
+  background: rgba(0, 0, 0, 0.12);
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  padding: 10px 14px;
+  cursor: pointer;
+  opacity: 0.8;
+}
+.loader.out .loader-skip {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loader.out {
+    transition: opacity 0.3s;
+    opacity: 0;
+  }
+  .loader.out .cell {
+    animation: none;
+  }
+}

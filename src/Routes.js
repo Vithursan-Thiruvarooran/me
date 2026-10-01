@@ -5,6 +5,7 @@ const Navbar = lazy(() => import("./components/Navbar/Navbar"));
 const Loader = lazy(() => import("./components/Loader/Loader"));
 const Footer = lazy(() => import("./components/Footer/Footer"));
 const StickyBar = lazy(() => import("./components/StickyBar/StickyBar"));
+const CommandMenu = lazy(() => import("./components/CommandMenu/CommandMenu"));
 
 const Router = () => {
   return (
@@ -16,6 +17,7 @@ const Router = () => {
       </Routes>
       <StickyBar></StickyBar>
       <Footer />
+      <CommandMenu />
     </>
   );
 };
