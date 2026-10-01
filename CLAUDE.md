@@ -21,8 +21,8 @@ This is a single-page personal portfolio built with Create React App. The entire
 
 **Containers** (`src/containers/`):
 - `SectionContainer` — wraps all sections except Home; handles scroll-triggered fade/slide animations via framer-motion + react-intersection-observer, and renders a divider with the section title
-- `HomeContainer` — full-viewport-height layout for the hero section
-- `LoaderContainer` — wraps the initial page loader
+- `HomeContainer` — full-viewport-height layout for the hero section; sits over the honeycomb canvas and passes pointer events through except on links/buttons
+- `LoaderContainer` — full-screen splash overlay; after its `duration` it breaks into hex tiles, sets `isLoading` false (so the page animates in underneath), then unmounts
 
 **Contexts** (`src/contexts/`):
 - `themeContext` — exposes `isDarkMode` / `setIsDarkMode`; initialized from `prefers-color-scheme`
@@ -32,4 +32,14 @@ This is a single-page personal portfolio built with Create React App. The entire
 
 **Contact form** (`src/sections/Contact.js`): Uses Formik + Yup for validation, and EmailJS for delivery. Requires three env vars: `REACT_APP_SERVICE_ID`, `REACT_APP_TEMPLATE_ID`, `REACT_APP_PUBLIC_KEY`.
 
-**Lazy loading**: `Navbar`, `Loader`, `Footer`, `StickyBar`, and `MainPage` are all lazy-loaded via `React.lazy` in `src/Routes.js`.
+**Hero** (`src/components/Honeycomb/Honeycomb.js`): three.js hex lattice behind the Home section. Tiles flip under the cursor, a click sends a wave of flips, and a 19-hex board region is drawn slightly darker. Colours come from each theme's `honeycomb` token. It is lazy-loaded from `Home.js` so three.js stays out of the main bundle, and it pauses when off-screen.
+
+**Loader** (`src/components/Loader/`): spells "vithiru" on hex tiles that flip in (CSS animations in `Loader.css`).
+
+**Command menu** (`src/components/CommandMenu/CommandMenu.js`): ⌘K / Ctrl+K palette mounted in `Routes.js`. Other components open it with `openCommandMenu()`. Its project entries scroll to `#project-<index>`.
+
+**Projects** (`src/components/ProjectCase/`): each project is a row with a swipeable media gallery (scroll-snap via `useSnapTrack`) and a full-screen `Lightbox`. Media items come from `projects[].media` in `data.js`. An item without `src` renders a "coming soon" placeholder.
+
+**Lazy loading**: `Navbar`, `Loader`, `Footer`, `StickyBar`, `CommandMenu`, and `MainPage` are all lazy-loaded via `React.lazy` in `src/Routes.js`.
+
+**Mobile**: every UI change must work at phone width (~375px), with touch equivalents for hover interactions.

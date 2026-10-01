@@ -1,134 +1,165 @@
-import React from "react";
-import PropTypes from 'prop-types';
-import { useTheme, Grid, Typography, Box, useMediaQuery, Tab, Tabs } from "@mui/material";
+import React, { useEffect, useRef, useState } from "react";
+import { useTheme, useMediaQuery, Box, Typography } from "@mui/material";
+import { motion, useMotionValue, useReducedMotion } from "framer-motion";
 import SectionContainer from "../containers/SectionContainer";
 import TechStack from "../components/TechStack/TechStack";
 
-import {experiences} from "../assets/data/data";
+import { experiences } from "../assets/data/data";
 
-function TabPanel(props) {
-  const { children, value, index, experience, ...other } = props;
+const HEX = "polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%)";
+// Where on screen the timeline "draws to", as a fraction of viewport height.
+const MARK = 0.65;
+
+const TimelineItem = ({ experience, active, side, itemRef, reduceMotion }) => {
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
+  const accent = theme.palette.primary.main;
+  const onRight = side === "right";
+  // Cards wait slightly dimmed and offset toward their side, then slide into place as the line reaches them.
+  // With reduced motion they only fade; the scroll-linked line still draws since it moves only while the user scrolls.
+  const shift = !isDesktop || onRight ? 32 : -32;
 
   return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`vertical-tabpanel-${index}`}
-      aria-labelledby={`vertical-tab-${index}`}
-      {...other}
+    <Box
+      ref={itemRef}
+      component="article"
+      sx={{
+        position: "relative",
+        pb: 5,
+        "&:last-of-type": { pb: 0 },
+        [theme.breakpoints.up("md")]: {
+          width: "50%",
+          ml: onRight ? "50%" : 0,
+          pl: onRight ? 5.5 : 0,
+          pr: onRight ? 0 : 5.5,
+        },
+      }}
     >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Grid container>
-            <Grid item xs={12}>
-              <Typography gutterBottom xs={12} variant="h5" color="primary">
-                {experience.job}
-              </Typography> 
-            </Grid>
-            <Grid item xs={12} md={12}>
-              <Typography variant="subtitle1" >
-                {experience.title}
-              </Typography>
-            </Grid>
-            <Grid item xs={12} md={12} sx={{paddingBottom: 4}}>
-              <Typography variant="caption">
-                {experience.duration}
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography gutterBottom>
-                {experience.description1}
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography gutterBottom>
-                {experience.description2}
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <TechStack technologies={experience.technologies} />
-            </Grid>
-          </Grid>
+      {/* hex marker that fills in once the line reaches it */}
+      <Box
+        sx={{
+          position: "absolute",
+          top: 3,
+          left: -40,
+          width: 24,
+          height: 26,
+          clipPath: HEX,
+          bgcolor: active ? accent : "divider",
+          display: "grid",
+          placeItems: "center",
+          transition: "background-color .3s",
+          [theme.breakpoints.up("md")]: onRight ? { left: -12 } : { left: "auto", right: -12 },
+          "&::after": {
+            content: '""',
+            width: 18,
+            height: 20,
+            clipPath: HEX,
+            background: active
+              ? `radial-gradient(circle, ${accent} 0 34%, ${theme.palette.background.default} 37%)`
+              : theme.palette.background.default,
+          },
+        }}
+      />
+      <Box
+        component={motion.div}
+        initial={false}
+        animate={active ? { opacity: 1, x: 0 } : { opacity: 0.35, x: reduceMotion ? 0 : shift }}
+        transition={reduceMotion ? { duration: 0.3 } : { type: "spring", stiffness: 120, damping: 20 }}
+        sx={{
+          border: 1,
+          borderColor: active ? accent : "divider",
+          borderRadius: 3,
+          p: { xs: 2.5, sm: 3 },
+          transition: "border-color .3s, box-shadow .3s",
+          boxShadow: active ? theme.shadows[6] : "none",
+        }}
+      >
+        <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "baseline", columnGap: 2 }}>
+          <Typography variant="h5" component="h3">
+            {experience.title}{" "}
+            <Box component="span" sx={{ color: "primary.main" }}>@ {experience.job}</Box>
+          </Typography>
+          <Typography variant="caption" sx={{ fontVariantNumeric: "tabular-nums" }}>
+            {experience.duration}
+          </Typography>
         </Box>
-      )}
-    </div>
+        <Typography sx={{ mt: 1.5 }} gutterBottom>
+          {experience.description1}
+        </Typography>
+        <Typography gutterBottom>
+          {experience.description2}
+        </Typography>
+        <TechStack technologies={experience.technologies} />
+      </Box>
+    </Box>
   );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
 };
-
-function a11yProps(index) {
-  return {
-    id: `vertical-tab-${index}`,
-    'aria-controls': `vertical-tabpanel-${index}`,
-  };
-}
 
 const Experience = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const reduceMotion = useReducedMotion();
+  const timelineRef = useRef(null);
+  const itemRefs = useRef([]);
+  const [activeCount, setActiveCount] = useState(0);
+  const progress = useMotionValue(0);
 
- const tabsStyle = {
-    borderBottom: isMobile ? 1 : 0,
-    borderRight: isMobile ? 0 : 1,
-    borderColor: 'divider',
-  };
+  // Newest role first.
+  const ordered = [...experiences].reverse();
 
-  const [value, setValue] = React.useState(0);
+  // The line fills to the MARK point on screen; each role activates once the line passes its top.
+  useEffect(() => {
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const el = timelineRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect(), mark = window.innerHeight * MARK;
+      const p = Math.min(1, Math.max(0, (mark - rect.top) / rect.height));
+      progress.set(p);
+      setActiveCount(itemRefs.current.filter((item) => item && item.getBoundingClientRect().top + 16 < mark).length);
+    };
+    const onScroll = () => { if (!frame) frame = requestAnimationFrame(update); };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [progress]);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
+  const lineSx = {
+    position: "absolute",
+    top: 6,
+    bottom: 6,
+    left: 11,
+    width: 2,
+    borderRadius: 1,
+    [theme.breakpoints.up("md")]: { left: "50%", ml: "-1px" },
   };
 
   return (
-      <SectionContainer id="experience" title={"Experience"} maxWidth="md">
-          <Grid container spacing={0} alignItems="center" style={{ width: "100%" }}>
-            <Grid
-              item
-              xs={12}
-              style={{ flexDirection: "column", alignItems: "space-around" }}
-            >
-              <Box mb={4} >
-                <Grid container >
-                  <Grid item xs={12} sm={3} justifyContent="center" alignItems="center">
-                    {/* <Box mb={4} sx={{width: '200px'}}> */}
-                      <Tabs
-                        orientation={isMobile ? "horizontal": "vertical"}
-                        centered
-                        variant="fullWidth"
-                        value={value}
-                        onChange={handleChange}
-                        aria-label="experience-tabs"
-                        sx={tabsStyle}
-                      >
-                        { 
-                          experiences.map((expr, i) => {
-                            return (
-                              <Tab key={"tab_" + i} label={expr.tabName} {...a11yProps(i)} />
-                            )
-                          })
-                        }
-                      </Tabs>
-                    {/* </Box> */}
-                  </Grid>
-                  <Grid item xs={12} sm={9} >
-                    { 
-                      experiences.map((experience, i) => {
-                        return (
-                        <TabPanel key={"tabPanel_" + i} value={value} index={i} experience={experience}></TabPanel>
-                        )
-                      })
-                    }
-                  </Grid>
-                </Grid>
-              </Box>
-            </Grid>
-          </Grid>
-      </SectionContainer>
+    <SectionContainer id="experience" title={"Experience"} maxWidth="md">
+      <Box ref={timelineRef} sx={{ position: "relative", pl: { xs: 5, md: 0 }, overflowX: "clip" }}>
+        <Box sx={{ ...lineSx, bgcolor: "divider" }} />
+        <Box
+          component={motion.div}
+          style={{ scaleY: progress, transformOrigin: "top" }}
+          sx={{ ...lineSx, bgcolor: "primary.main" }}
+        />
+        {ordered.map((experience, i) => (
+          <TimelineItem
+            key={experience.tabName}
+            experience={experience}
+            side={i % 2 ? "right" : "left"}
+            active={i < activeCount}
+            reduceMotion={reduceMotion}
+            itemRef={(el) => { itemRefs.current[i] = el; }}
+          />
+        ))}
+      </Box>
+    </SectionContainer>
   );
 };
 

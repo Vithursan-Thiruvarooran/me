@@ -1,47 +1,39 @@
 import React from 'react'
-import { Container, Typography} from '@mui/material';
+import { Box, ButtonBase, Typography } from '@mui/material';
 
-import { useTheme } from "@mui/material";
+import { openCommandMenu, shortcutLabel } from "../CommandMenu/CommandMenu";
 
-import VithursanLogo from "../../assets/images/VithursanLogo";
-
+const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+const mono = "ui-monospace, Menlo, Consolas, monospace";
 
 const Footer = () => {
-
-  const theme = useTheme();
-
-  const container = {
-    width: "100%",
-    //maxWidth: 'xl',
-    minHeight: "6vh",
-    display:"flex",
-    alignItems:"center",
-    background: theme.palette.primary.main,
-    justifyContent: 'space-between',
-    px: 4,
-    //margin: 0
-  }
-
   return (
-    <Container maxWidth={false} sx={container}>
-      {/* <Grid container spacing={2} alignItems="center" justifyContent='space-between'> */}
-        {/* <Grid item xs={5}> */}
-          <VithursanLogo width="110px" color={theme.loadLogoColor}/> 
-        {/* </Grid> */}
-        {/* <Grid item xs={6}> */}
-          {/* <Typography>
-            vithiru
-          </Typography> */}
-        {/* </Grid> */}
-        {/* <Grid item xs={6}> */}
-          <Typography>
-            vithiru
-          </Typography>
-        {/* </Grid> */}
-      {/* </Grid> */}
-      
-      
-    </Container>
+    <Box
+      component="footer"
+      sx={{
+        maxWidth: 1080,
+        mx: "auto",
+        px: { xs: 2, sm: 4 },
+        pt: 8,
+        pb: "calc(40px + env(safe-area-inset-bottom, 0px))",
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "space-between",
+        gap: 1.5,
+        borderTop: 1,
+        borderColor: "divider",
+      }}
+    >
+      <Typography variant="caption" sx={{ fontFamily: mono, opacity: 0.7 }}>
+        © {new Date().getFullYear()} Vithursan Thiruvarooran
+      </Typography>
+      <ButtonBase
+        onClick={openCommandMenu}
+        sx={{ fontFamily: mono, fontSize: 12, opacity: 0.7, borderRadius: 1, "&:hover": { opacity: 1 } }}
+      >
+        {canHover ? `Press ${shortcutLabel} anywhere to jump around` : "Tap here to jump around"}
+      </ButtonBase>
+    </Box>
   )
 }
 

@@ -11,7 +11,7 @@ const baseTheme = {
       xl: 1920,
     },
   },
-  navbarHeight: "70px",
+  navbarHeight: "64px",
   mobileNavbarHeight: "55px",
   loadLogoColor: '#F2E7D5',
   components: {
@@ -37,8 +37,15 @@ const baseTheme = {
   }
 };
 
+const displayFont = '"Bricolage Grotesque", "Avenir Next", system-ui, sans-serif';
+const bodyFont = '"Instrument Sans", "Segoe UI", system-ui, sans-serif';
+const headings = Object.fromEntries(
+  ["h1", "h2", "h3", "h4", "h5", "h6"].map((h) => [h, { fontFamily: displayFont, fontWeight: 700, letterSpacing: "-0.02em" }])
+);
+
 const darkTheme = createTheme({
   navLogoColor: '#6D9886',
+  honeycomb: { background: "#1A1A1A", line: "#7FAE99", dot: "#B7D6C7", fill: "#6D9886" },
   palette: {
     mode: "dark",
     background: {
@@ -55,6 +62,8 @@ const darkTheme = createTheme({
     },
   },
   typography: {
+    fontFamily: bodyFont,
+    ...headings,
     allVariants:{
       color: '#F2E7D5'
     },
@@ -73,6 +82,7 @@ const darkTheme = createTheme({
 
 const lightTheme = createTheme({
   navLogoColor: '#6D9886',
+  honeycomb: { background: "#F2E7D5", line: "#6D9886", dot: "#3F6B58", fill: "#6D9886" },
   palette: {
     mode: "light",
     background: {
@@ -89,6 +99,8 @@ const lightTheme = createTheme({
     },
   },
   typography: {
+    fontFamily: bodyFont,
+    ...headings,
     allVariants:{
       color: '#000000'
     },

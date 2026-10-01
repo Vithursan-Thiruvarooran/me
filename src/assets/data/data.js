@@ -40,46 +40,79 @@ export const experiences = [
   },
 ];
 
+// Each project shows as a row with a media gallery. Media items:
+//   { type: 'image' | 'phone' | 'video', src, poster?, caption }
+// `src` is a file in src/assets/images, or a path in public/ starting with "/".
+// `phone` frames a tall mobile screenshot (add `frame: 'phone'` to a portrait video for the same frame);
+// `fit: 'contain'` shows an image whole instead of cropping it. Videos should have a `poster` image.
+// Leave out `src` to show a "coming soon" placeholder.
 export const projects = [
   {
     title: 'Scrabble Score Tracker',
-    image: 'scrabble.jpg',
-    description1: 'A real-time Scrabble application with live game state sync across two players via bidirectional WebSocket communication.',
-    description2: 'React 19 / TypeScript frontend backed by FastAPI + Python-socketio, with MongoDB and Redis for persistence. Client-side scoring logic handles premium squares, cross-word scores, and the bingo bonus for live tile-drag previews on a @dnd-kit board. Shipped as a PWA with Web Push notifications. Includes a computer-vision pipeline (OpenCV + Tesseract OCR) that scans a physical board via ArUco markers and perspective warping to extract the 15×15 letter grid from a photo.',
+    eyebrow: 'Two-player online game',
+    description1: 'A Scrabble game you can play online with a friend, with the board and scores kept in sync live.',
+    highlights: [
+      'Game state synced between two players over WebSockets',
+      'Scores premium squares, cross-words and the bingo bonus as you drag tiles',
+      'Reads a physical 15×15 board from a photo with OpenCV and Tesseract',
+    ],
     technologies: ["React", "TypeScript", "FastAPI", "Python", "MongoDB", "Redis", "Socket.IO", "OpenCV"],
     links: [
-      { label: 'Site', url: 'https://vithiru.ddns.net/scrabble/' },
+      { label: 'Play online', url: 'https://vithiru.ddns.net/scrabble/' },
       { label: 'GitHub', url: 'https://github.com/Vithursan-Thiruvarooran/scrabble-score-tracker' }
+    ],
+    media: [
+      { type: 'video', frame: 'phone', src: 'scrabble-new-game.mp4', poster: 'scrabble-new-game.jpg', caption: 'Adding a friend, starting an online game and playing the first word' },
+      { type: 'video', frame: 'phone', src: 'scrabble-replay.mp4', poster: 'scrabble-replay.jpg', caption: 'Stepping through a finished game, including a challenged word' },
+      { type: 'phone', src: 'scrabble.jpg', caption: 'A game in progress, with your tile rack' },
+      { type: 'phone', src: 'scrabble1.png', caption: 'Replaying a finished game move by move' },
+      { type: 'phone', src: 'scrabble2.png', caption: 'Starting an online game with a friend' },
     ],
   },
   {
     title: 'Colonist Data Tracker',
-    image: 'projectCatanTracker.png',
+    eyebrow: 'Data pipeline and dashboard',
     description1: 'A data pipeline and dashboard that pulls game data from colonist.io and turns it into stats and full game replays.',
-    description2: 'A custom Chrome extension grabs the replay data for finished colonist.io games. A Python decoder then pulls out dice rolls, trades, builds, robber moves, starting placements and final scores. Games are stored in MongoDB and served through a FastAPI backend to a React dashboard with stats across games, per-game breakdowns and turn-by-turn replays. Deployed with Docker on my personal server.',
+    highlights: [
+      'A Chrome extension captures replay data from finished colonist.io games',
+      'A Python decoder pulls out dice rolls, trades, builds, robber moves and scores',
+      'The dashboard shows stats across games, per-game breakdowns and turn-by-turn replays',
+    ],
     technologies: ["React", "TypeScript", "FastAPI", "MongoDB", "Docker"],
     links: [
-      { label: 'Site', url: 'https://vithiru.ddns.net/colonist/' },
+      { label: 'Visit site', url: 'https://vithiru.ddns.net/colonist/' },
       { label: 'GitHub', url: 'https://github.com/Vithursan-Thiruvarooran/colonist-tracker' }
     ],
+    media: [
+      { type: 'video', frame: 'phone', src: 'colonist-replay.mp4', poster: 'colonist-replay.jpg', caption: 'Opening a game and playing back its replay' },
+      { type: 'image', src: 'colonist5.png', caption: 'A player\'s stats across 82 games' },
+      { type: 'image', src: 'colonist2.png', caption: 'A game\'s board rebuilt from the replay data' },
+      { type: 'image', src: 'colonist3.png', caption: 'Trading and robber breakdowns per player' },
+      { type: 'image', src: 'colonist1.png', caption: 'Every captured game, most recent first' },
+      { type: 'image', src: 'colonist4.png', fit: 'contain', caption: 'The Chrome extension that captures games' },
+      { type: 'video', frame: 'phone', src: 'colonist-stats.mp4', poster: 'colonist-stats.jpg', caption: 'A tour of the stats pages' },
+    ],
   },
-  
 ];
 
 export const about_description1 = 
 `
-Hi, my name is Vithursan Thiruvarooran, and I enjoy solving complex problems—whether it’s a tough chess puzzle, an engaging board game, or tracking down an interesting bug. That curiosity led me to pursue a degree in Computer Science at the University of Toronto, where I specialized in Software Engineering. 
+Hi, I'm Vithursan. Whether it's a tough chess puzzle, a board game, or an interesting bug, I enjoy working at something until it gives. That curiosity led me to Computer Science at the University of Toronto, where I specialized in Software Engineering.
 `;
 
 export const about_description2 = 
 `
-Most recently, I’ve been working in Quality Engineering, where I design and implement scalable test automation solutions for UI, API, and performance testing. This includes building end-to-end frameworks with Playwright, developing API tests, running load tests, and integrating automation into CI/CD pipelines to improve reliability and efficiency.
+Lately I've been working in quality engineering, designing test automation for UI, API and performance testing and running it in CI/CD pipelines.
 `; 
 
-export const about_description3 = 
-`
-Fun fact: I competed in the 2025 Canadian National Catan Championships and will be returning to compete in 2026.
-`
+export const about_caption = "Based in Toronto. Computer Science at the University of Toronto.";
+
+// Rows under the bio. `link.to` is a section id to scroll to.
+export const about_rows = [
+  { label: 'At work', text: 'Test automation for UI, API and performance testing.' },
+  { label: 'On the side', text: 'A two-player Scrabble game you can play online, and a stats tracker for Colonist.', link: { label: 'See projects', to: 'projects' } },
+  { label: 'For fun', text: 'Board games, lots of them. 2026 Catan National Semifinalist.' },
+];
 
 export const linkedIn = "https://www.linkedin.com/in/vithursan-t-70b869133/";
 export const gitHub = "https://github.com/Vithursan-Thiruvarooran/";

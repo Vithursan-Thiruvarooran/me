@@ -23,3 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 
 .env
+# Full-size screen recordings; web-sized copies live in src/assets/images
+/media-originals

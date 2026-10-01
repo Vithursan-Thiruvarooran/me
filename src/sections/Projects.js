@@ -1,37 +1,32 @@
-import React, {useState} from "react";
-import { AnimatePresence } from "framer-motion";
-import { Grid } from "@mui/material";
+import React from "react";
+import { Box } from "@mui/material";
 import SectionContainer from "../containers/SectionContainer";
-import ProjectCard from "../components/ProjectCard/ProjectCard";
-import OpenProjectCard from "../components/ProjectCard/OpenProjectCard";
+import ProjectCase from "../components/ProjectCase/ProjectCase";
 import { projects } from "../assets/data/data";
 
+const HEX = "polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%)";
+
+// Small centred break between projects: two short sage lines around a hexagon outline.
+// Kept short and centred so it reads differently from the full-width, titled section dividers.
+const ProjectBreak = () => (
+  <Box aria-hidden="true" sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 1.5, my: "clamp(40px, 6vw, 64px)" }}>
+    <Box sx={{ width: "clamp(40px, 8vw, 72px)", height: "1px", bgcolor: "primary.main", opacity: 0.45 }} />
+    <Box sx={{ width: 14, height: 16, clipPath: HEX, bgcolor: "primary.main", p: "2px", opacity: 0.8 }}>
+      <Box sx={{ width: "100%", height: "100%", clipPath: HEX, bgcolor: "background.default" }} />
+    </Box>
+    <Box sx={{ width: "clamp(40px, 8vw, 72px)", height: "1px", bgcolor: "primary.main", opacity: 0.45 }} />
+  </Box>
+);
+
 const Projects = () => {
-
-  const [selectedProject, setSelectedProject] = useState(null);
-
   return (
-    <SectionContainer id="projects" title={"Projects"} maxWidth="md">
-      <Grid 
-        container
-        alignItems="center"
-        spacing={4} 
-        justifyContent="center"
-      >
-        { 
-          projects.map((project, i) => {
-            return (
-              <Grid key={i} item xs={12} sm={8} md={5}>
-                <ProjectCard key={i} index={i} project={project} onClick={setSelectedProject}></ProjectCard>
-              </Grid>
-            )
-          })
-        }
-      </Grid>
-
-      <AnimatePresence mode="wait">
-        { selectedProject !== null ? (<OpenProjectCard key={selectedProject} index={selectedProject} project={projects[selectedProject]} onClose={() => setSelectedProject(null)}></OpenProjectCard>) : null}
-      </AnimatePresence>
+    <SectionContainer id="projects" title={"Projects"}>
+      {projects.map((project, i) => (
+        <React.Fragment key={project.title}>
+          {i > 0 && <ProjectBreak />}
+          <ProjectCase id={`project-${i}`} project={project} flip={i % 2 === 1} />
+        </React.Fragment>
+      ))}
     </SectionContainer>
   );
 };
